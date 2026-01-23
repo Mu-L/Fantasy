@@ -157,7 +157,7 @@ public class Player : Entity, ISupportedSerialize
 }
 
 // 多实例 + 数据库持久化
-public class ItemComponent : Entity, ISupportedMultiEntity, ISupportedSerialize
+public class ItemComponent : Entity, ISupportedSerialize
 {
     public int ItemId { get; set; }
     public int Count { get; set; }
@@ -191,19 +191,19 @@ await database.Save(player);
 await database.Save(player, collection: "players_backup");
 ```
 
-#### 2. 保存聚合实体（带子组件）
+#### 2. 保存多个拥有相同 Id 实体
 
 ```csharp
-var player = Entity.Create<Player>(scene, isPool: true, isRunEvent: true);
-player.AddComponent<InventoryComponent>();
-player.AddComponent<EquipmentComponent>();
+var inventoryComponent = Entity.Create<InventoryComponent>(scene, isPool: true, isRunEvent: true);
+var equipmentComponent = Entity.Create<EquipmentComponent>(scene, isPool: true, isRunEvent: true);
 
 // 保存主实体及其所有组件
 var entities = new List<(Entity, string)>
 {
-    (player, "Player"),
-    (player.GetComponent<InventoryComponent>(), "InventoryComponent"),
-    (player.GetComponent<EquipmentComponent>(), "EquipmentComponent")
+    // 元组中第一个为要保存实体的实体
+  	// 第二个参数为要保存数据中的名字
+    (inventoryComponent, "InventoryComponent"),
+    (equipmentComponent, "EquipmentComponent")
 };
 await database.Save(player.Id, entities);
 ```

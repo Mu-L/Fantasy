@@ -773,22 +773,23 @@ public async FTask SendChatMessage(Session session, string content)
 // Gate 服务器向 Chat 服务器发送消息
 public async FTask SendToChatServer(Scene scene, Session session, int chatRoamingType)
 {
-    // 获取 Terminus
-    var terminus = scene.TerminusComponent.GetTerminus(session, chatRoamingType);
-    if (terminus == null)
+    // 获取 roaming
+    // 注意 Gate 一般都是为消息转发端，所以 Gate 端需要获取roaming来进行发送
+    // 如果是非 Gate 端不要使用
+    if (!session.TryGetRoaming(out var roaming))
     {
-        Log.Error("❌ Terminus 不存在，请先建立路由");
+        Log.Error("❌ roaming 不存在，请先建立Roaming");
         return;
     }
 
     // 发送单向消息
-    terminus.Send(chatRoamingType, new G2Chat_TestRoamingMessage
+    roaming.Send(chatRoamingType, new G2Chat_TestRoamingMessage
     {
         Content = "Hello from Gate"
     });
 
     // 发送 RPC 请求
-    var response = (Chat2G_GetDataResponse)await terminus.Call(
+    var response = (Chat2G_GetDataResponse)await roaming.Call(
         chatRoamingType,
         new G2Chat_GetDataRequest
         {

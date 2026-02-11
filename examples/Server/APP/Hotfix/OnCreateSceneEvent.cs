@@ -1,19 +1,11 @@
-using System.Buffers;
 using Fantasy.Async;
-using Fantasy.Entitas;
-using Fantasy.Entitas.Interface;
 using Fantasy.Event;
-using Fantasy.Helper;
-using Fantasy.SeparateTable;
-using Fantasy.Serialize;
-using LightProto;
-using MemoryPack;
 
 namespace Fantasy;
 
-
 public sealed class OnCreateSceneEvent : AsyncEventSystem<OnCreateScene>
 {
+
     private static long _addressableSceneRunTimeId;
 
     /// <summary>

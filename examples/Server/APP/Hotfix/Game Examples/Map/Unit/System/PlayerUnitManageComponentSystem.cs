@@ -17,36 +17,33 @@ public sealed class PlayerUnitManageComponentDestroySystem : DestroySystem<Playe
 
 public static class PlayerUnitManageComponentSystem
 {
-    extension(PlayerUnitManageComponent self)
+    public static bool Add(this PlayerUnitManageComponent self, PlayerUnit unit)
     {
-        public bool Add(PlayerUnit unit)
+        if (!self.Units.TryAdd(unit.Id, unit))
         {
-            if (!self.Units.TryAdd(unit.Id, unit))
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
-        public bool Remove(long unitId, bool isDispose = true)
-        {
-            if (!self.Units.Remove(unitId, out var unit))
-            {
-                return false;
-            }
+        return true;
+    }
 
-            if (isDispose)
-            {
-                unit.Dispose();
-            }
+    public static bool Remove(this PlayerUnitManageComponent self, long unitId, bool isDispose = true)
+    {
+        if (!self.Units.Remove(unitId, out var unit))
+        {
+            return false;
+        }
+
+        if (isDispose)
+        {
+            unit.Dispose();
+        }
         
-            return true;
-        }
+        return true;
+    }
 
-        public bool TryGetUnit(long unitId, out PlayerUnit unit)
-        {
-            return self.Units.TryGetValue(unitId, out unit!);
-        }
+    public static bool TryGetUnit(this PlayerUnitManageComponent self, long unitId, out PlayerUnit unit)
+    {
+        return self.Units.TryGetValue(unitId, out unit!);
     }
 }

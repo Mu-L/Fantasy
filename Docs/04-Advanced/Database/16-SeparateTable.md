@@ -204,6 +204,7 @@ public class PlayerInventoryEntity : Entity
 [SeparateTable(typeof(Player), "PlayerEquipment")]
 public class PlayerEquipmentEntity : Entity
 {
+  	[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
     public Dictionary<int, int> Equipments { get; set; }
 }
 
@@ -279,6 +280,7 @@ public class PlayerInventoryEntity : Entity
 [SeparateTable(typeof(Player), "PlayerEquipment")]
 public class PlayerEquipmentEntity : Entity
 {
+    [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
     public Dictionary<int, EquipmentData> Equipments { get; set; }
 }
 
@@ -293,6 +295,7 @@ public class PlayerFriendsEntity : Entity
 [SeparateTable(typeof(Player), "PlayerQuests")]
 public class PlayerQuestsEntity : Entity
 {
+    [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
     public Dictionary<int, QuestProgress> ActiveQuests { get; set; }
 }
 ```
@@ -816,6 +819,7 @@ public class PlayerInventoryEntity : Entity
 [SeparateTable(typeof(Player), "PlayerEquipment")]
 public class PlayerEquipmentEntity : Entity
 {
+    [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
     public Dictionary<int, EquipmentData> Equipments { get; set; }
 }
 
@@ -916,6 +920,7 @@ public class LeaderboardRankingsEntity : Entity
 [SeparateTable(typeof(Leaderboard), "LeaderboardRewards")]
 public class LeaderboardRewardsEntity : Entity
 {
+    [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
     public Dictionary<int, RewardData> Rewards { get; set; }
 }
 ```

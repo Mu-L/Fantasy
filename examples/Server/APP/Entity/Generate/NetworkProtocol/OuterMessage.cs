@@ -196,7 +196,7 @@ namespace Fantasy
         {
             if (!IsPool()) return; 
             Tag = default;
-            Data = default;
+            Data = null;
             MessageObjectPool<C2G_TestRequest>.Return(this);
         }
         public uint OpCode() { return OuterOpcode.C2G_TestRequest; } 
@@ -205,7 +205,7 @@ namespace Fantasy
         [ProtoMember(1)]
         public string Tag { get; set; }
         [ProtoMember(2)]
-        public byte Data { get; set; }
+        public List<byte> Data { get; set; }
     }
     [Serializable]
     [ProtoContract]
